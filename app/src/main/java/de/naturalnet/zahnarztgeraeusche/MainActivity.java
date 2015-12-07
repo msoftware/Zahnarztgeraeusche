@@ -1,5 +1,8 @@
 package de.naturalnet.zahnarztgeraeusche;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +12,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.lang.reflect.Field;
+import java.util.Hashtable;
+
 public class MainActivity extends AppCompatActivity {
+    Hashtable<String, MediaPlayer> players;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        players = new Hashtable<String, MediaPlayer>();
+
+        for (Field f : R.raw.class.getFields()) {
+            players.put(f.getName(), MediaPlayer.create(this, f.getInt(f)));
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
