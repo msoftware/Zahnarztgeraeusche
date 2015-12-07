@@ -11,12 +11,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ToggleButton;
 
 import java.lang.reflect.Field;
 import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
     Hashtable<String, MediaPlayer> players;
+
+    ToggleButton btnDrill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +31,24 @@ public class MainActivity extends AppCompatActivity {
         players = new Hashtable<String, MediaPlayer>();
 
         for (Field f : R.raw.class.getFields()) {
-            players.put(f.getName(), MediaPlayer.create(this, f.getInt(f)));
+            try {
+                players.put(f.getName(), MediaPlayer.create(this, f.getInt(f)));
+            } catch (IllegalAccessException e) {
+                // FIXME Do something useful
+            }
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnDrill = (ToggleButton) findViewById(R.id.btnDrill);
+        btnDrill.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                if (btnDrill.isChecked()) {
+                    players.get("drill").setLooping(true);
+                    players.get("drill").start();
+                } else {
+                    players.get("drill").pause();
+                    players.get("drill").seekTo(0);
+                }
             }
         });
     }
