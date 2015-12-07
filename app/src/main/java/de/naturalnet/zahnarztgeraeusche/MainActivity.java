@@ -1,22 +1,15 @@
 package de.naturalnet.zahnarztgeraeusche;
 
-import android.app.Activity;
 import android.content.Context;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ToggleButton;
@@ -24,7 +17,6 @@ import android.widget.ToggleButton;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private class SoundListAdapter extends BaseAdapter {
